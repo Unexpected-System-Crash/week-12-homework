@@ -4,6 +4,29 @@ import got from 'got';
 const dataURL = "https://dev-cs-55-week-12-homework.pantheonsite.io/wp-json/twentytwentytwo-child/v1/latest-posts/1";
 
 
+//function to get specifically the post IDs. 
+// most of it is very similar to the above function
+export async function getAllPostIds() {
+    let jsonString;
+    try {
+      jsonString = await got(dataURL);
+      console.log(jsonString.body);
+    } catch(error) {
+      jsonString.body = [];
+      console.log(error);
+    }
+  
+    const jsonObj = JSON.parse(jsonString.body);
+  
+    return jsonObj.map(item => {
+      return {
+        params: {
+          id: item.ID.toString()
+        }
+      }
+    });
+}
+
 //gets all of the post data from a particular post
 export async function getSortedPostsData() {
     let jsonString;
@@ -30,28 +53,6 @@ export async function getSortedPostsData() {
     
 }
 
-//function to get specifically the post IDs. 
-// most of it is very similar to the above function
-export async function getAllPostIds() {
-    let jsonString;
-    try {
-        jsonString = await got(dataURL);
-        
-    } catch {
-        jsonString.body = [];
-        console.log(error);
-    }
-    const jsonObj = JSON.parse(jsonString.body);
-
-    //returns the title and date of a particular post
-    return jsonObj.map(item => {
-        return {
-            params: {
-                id: item.ID.toString()
-            }
-        }
-    });
-}
 //returns the post with the specified ID
 //must recieve the id parameter
 export async function getPostData(id) {
