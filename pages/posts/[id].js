@@ -1,6 +1,6 @@
 //imports all of the important stuff
 import Layout from '../../components/layout';
-import { getSortedList, getPostData } from '../../lib/posts-json';
+import { getSortedPostsData, getPostData } from '../../lib/posts-json';
 import Head from 'next/head';
 
 //function that renders a post page
@@ -23,7 +23,7 @@ export default function Post({ postData }) {
 
 //returns a list of possible values for 'id'
 export async function getStaticPaths() {
-    const paths = getSortedList();
+    const paths = getSortedPostsData();
     return {
         paths, 
         fallback: false,
